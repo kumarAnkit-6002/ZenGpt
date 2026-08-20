@@ -41,7 +41,8 @@ router.post("/register", async (req, res) => {
         res.cookie("token", token, COOKIE_OPTIONS);
 
         return res.status(201).json({
-            user: { id: user._id, name: user.name, username: user.username }
+            user: { id: user._id, name: user.name, username: user.username },
+            message: "User registered successfully"
         });
     } catch (err) {
         console.log("Register error:", err);
@@ -72,7 +73,8 @@ router.post("/login", async (req, res) => {
         res.cookie("token", token, COOKIE_OPTIONS);
 
         return res.json({
-            user: { id: user._id, name: user.name, username: user.username }
+            user: { id: user._id, name: user.name, username: user.username },
+            message: "Logged in successfully"
         });
     } catch (err) {
         console.log("Login error:", err);
@@ -93,7 +95,7 @@ router.get("/me", requireAuth, async (req, res) => {
         if (!user) {
             return res.status(404).json({ error: "User not found" });
         }
-        return res.json({ user: { id: user._id, name: user.name, username: user.username } });
+        return res.json({ user: { id: user._id, name: user.name, username: user.username }, message: "User fetched successfully" });
     } catch (err) {
         console.log("Me error:", err);
         return res.status(500).json({ error: "Failed to fetch user" });

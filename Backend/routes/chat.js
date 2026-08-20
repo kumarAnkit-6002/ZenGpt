@@ -108,7 +108,8 @@ router.post("/chat", async (req, res) => {
         await thread.save();
 
         return res.json({
-            reply: assistantReply
+            reply: assistantReply,
+            message: "Chat processed successfully"
         });
 
     } catch (err) {
