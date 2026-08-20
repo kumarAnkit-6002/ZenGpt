@@ -1,6 +1,6 @@
 const configuredBackendUrl = import.meta.env.VITE_BACKEND_URL;
-const productionBackendUrl = "https://zengptbackend2.onrender.com";
+const productionBackendUrl = "";
 
-export const backendUrl = import.meta.env.PROD && !configuredBackendUrl?.startsWith("https://")
+export const backendUrl = import.meta.env.PROD
     ? productionBackendUrl
     : (configuredBackendUrl || "http://localhost:8080");

@@ -64,7 +64,6 @@ function ChatWindow() {
         setPrompt("");
     }, [reply]);
 
-
     const handleProfileClick = () => {
         setIsOpen(!isOpen);
     }
