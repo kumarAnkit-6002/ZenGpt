@@ -8,6 +8,10 @@ import authRoutes from "./routes/auth.js";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
+const allowedOrigins = (process.env.CLIENT_URLS || process.env.CLIENT_URL || "http://localhost:5173")
+    .split(",")
+    .map((origin) => origin.trim().replace(/\/$/, ""))
+    .filter(Boolean);
 
 app.use(express.json());
 app.use(cookieParser());
@@ -15,7 +19,12 @@ app.use(cookieParser());
 // credentials: true is required so the browser will send/receive the
 // httpOnly auth cookie; origin must be an explicit URL (not "*") for that.
 app.use(cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173" ,
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin.replace(/\/$/, ""))) {
+            return callback(null, true);
+        }
+        return callback(new Error(`CORS origin not allowed: ${origin}`));
+    },
     credentials: true
 }));
 
