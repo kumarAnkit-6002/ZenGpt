@@ -13,6 +13,9 @@ function Sidebar() {
                 credentials: "include"
             });
             const res = await response.json();
+            if (!response.ok) {
+                throw new Error(res.error || "Failed to fetch threads");
+            }
             const filteredData = res.map(thread => ({threadId: thread.threadId, title: thread.title}));
             //console.log(filteredData);
             setAllThreads(filteredData);

@@ -4,11 +4,13 @@ import { User } from "../models/user.js";
 import requireAuth from "../middleware/auth.js";
 
 const router = express.Router();
-const isProd = process.env.NODE_ENV === "production";
+const isProd = process.env.NODE_ENV === "production"
+    || process.env.COOKIE_SECURE === "true"
+    || process.env.CLIENT_URL?.startsWith("https://");
 
 const COOKIE_OPTIONS = {
     httpOnly: true,
-   sameSite: isProd ? "none" : "lax",
+    sameSite: isProd ? "none" : "lax",
     secure: isProd,
     maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
 };
