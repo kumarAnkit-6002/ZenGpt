@@ -6,9 +6,20 @@ import { backendUrl } from "./config";
 import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {ScaleLoader} from "react-spinners";
+import { v1 as uuidv1 } from "uuid";
 
 function ChatWindow() {
-    const {prompt, setPrompt, reply, setReply, currThreadId, setPrevChats, setNewChat} = useContext(MyContext);
+    const {
+        prompt,
+        setPrompt,
+        reply,
+        setReply,
+        currThreadId,
+        setCurrThreadId,
+        setPrevChats,
+        setNewChat,
+        setAllThreads
+    } = useContext(MyContext);
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
@@ -43,6 +54,12 @@ function ChatWindow() {
     }
 
     const handleLogout = async () => {
+        setPrompt("");
+        setReply(null);
+        setPrevChats([]);
+        setNewChat(true);
+        setCurrThreadId(uuidv1());
+        setAllThreads([]);
         await logout();
         navigate("/login");
     }
