@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext(null);
 
-const API_BASE = "http://localhost:8080/api/auth";
+const API_BASE = import.meta.env.VITE_BACKEND_URL ? `${import.meta.env.VITE_BACKEND_URL}/api/auth` : "https://zengptbackend2.onrender.com/api/auth";
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
